@@ -18,6 +18,8 @@ from .discord import Discord
 from .home import Home
 from .responsive_menu_layout import ResponsiveMenuLayout
 from .settings import Settings
+from .components import Components
+
 from .telegram import Telegram
 
 LIGHT_SEED_COLOR = ft.colors.TEAL
@@ -28,7 +30,7 @@ class UserInterface(ft.View):
     def __init__(self, page: ft.Page):
         super().__init__()
         self.page = page
-        self.page.title = 'Microsoft Rewards Farmer'
+        self.page.title = 'Tiktoka Studio Toolkits'
         self.page.fonts = {
             'SF thin': 'fonts/SFUIDisplay-Thin.otf',
             'SF regular': 'fonts/SF-Pro-Display-Regular.otf',
@@ -154,6 +156,8 @@ class UserInterface(ft.View):
 
         self.home_page = Home(self, self.page)
         self.settings_page = Settings(self, self.page)
+
+        self.components_page = Components(self, self.page)
         self.telegram_page = Telegram(self, self.page)
         self.discord_page = Discord(self, self.page)
         self.accounts_page = Accounts(self, self.page)
@@ -202,6 +206,14 @@ class UserInterface(ft.View):
             ),
             (
                 dict(
+                    icon=ft.icons.BROWSE_GALLERY,
+                    selected_icon=ft.icons.BROWSE_GALLERY,
+                    label='Components',
+                ),
+                self.components_page.build(),
+            ),            
+            (
+                dict(
                     icon=ft.icons.INFO_ROUNDED,
                     selected_icon=ft.icons.INFO_ROUNDED,
                     label='About',
@@ -247,6 +259,8 @@ class UserInterface(ft.View):
         self.page.snack_bar.bgcolor = self.color_scheme
         self.home_page.toggle_theme_mode(self.color_scheme)
         self.settings_page.toggle_theme_mode(self.color_scheme)
+        self.components_page.toggle_theme_mode(self.color_scheme)
+
         self.telegram_page.toggle_theme_mode(self.color_scheme)
         self.discord_page.toggle_theme_mode(self.color_scheme)
         self.accounts_page.toggle_theme_mode(self.color_scheme)
@@ -571,5 +585,7 @@ class UserInterface(ft.View):
         self.home_page.set_initial_values()
         self.telegram_page.set_initial_values()
         self.settings_page.set_initial_values()
+        self.components_page.set_initial_values()
+
         self.toggle_theme_mode(None)
         self.page.update()
